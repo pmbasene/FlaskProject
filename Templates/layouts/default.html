@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+        {% if title  %}
+            <title>Baba - {{ title }}  </title>
+        {% else %}
+            <title>Baba</title>
+        {% endif %}
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        {% block css %}           {% endblock %}
+       
+        
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> 
+        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>   
+    </head>
+
+    <body>  
+             
+        <!-- header -->
+
+        <!-- navigation bar    -->
+        {%include 'shared/_nav.html' %}
+
+        <!-- body  -->
+  
+
+
+        {% block body %}
+
+        {% endblock %}
+
+        <!-- footer -->
+        <footer class="footer is-black">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>
