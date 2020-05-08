@@ -1,12 +1,82 @@
 {% extends 'layouts/default.html' %}
 
 {% block body %}
+<h1 class="title">
+    Connectez vous à votre compte
+</h1>
 
-        <div class="container">
-          <h1 class="title">This is my Login page</h1>
-          <h2 class="subtitle">
-            A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
-          </h2>
-        </div>
+
+<div class="columns">
+    <div class="column is-offset-4 is-4">
+      <form method="POST" action="#">
+          {{ form.hidden_tag() }}
+            
+            <div class="field ">
+              <!-- <label class="label">Email</label> -->
+              <div class="control">
+                <!-- <input class="input is-danger" type="email" placeholder="Email input" value="hello@"> -->
+               
+                {{ form.email.label(class="label") }}
+                {% if form.email.errors %}
+                      {{ form.email(class="input is-danger") }}
+                          <div class="help is-danger">
+                              {% for error in form.email.errors %}
+                                      {{ error }}
+                              {% endfor %}
+                          </div>           
+                  {% else %}
+                      {{ form.email(class="input is-success ") }}
+                  {% endif %}
+              </div>
+              <!-- <p class="help is-danger">This email is invalid</p> -->
+            </div>
+  
+            <div class="field">
+              <!-- <label class="label">Password</label> -->
+              <p class="control">
+                <!-- <input class="input" type="password" placeholder="Password"> -->      
+                {{ form.password.label(class="label") }}
+                {% if form.password.errors %}
+                      {{ form.password(class="input is-danger") }}
+                          <div class="help is-danger">
+                              {% for error in form.password.errors %}
+                                      {{ error }}
+                              {% endfor %}
+                          </div>     
+                  {% else %}
+                      {{ form.password(class="input is-success ") }}
+                  {% endif %}
+              </p>
+            </div>
+
+            <div>
+                <label class="checkbox">
+                    {{ form.remember.label(class="checkbox") }}
+                    {{ form.remember(class="checkbox") }}
+                  </label>   
+            </div>
+            
+
+            <div class="field">
+              <div class="control">
+                <!-- <button class="button is-link">Sign up</button> -->
+                {{ form.submit( class = 'control button is-link') }}
+              </div>
+            </div>
+            <small>Have you forget your email or/and password ? <a href="#"> Click here</a></small>
+      </form>
+
+      <div class="border-top pt-3">
+        <small class=""text-muted>
+           Need an account ? <a href="{{ url_for('register') }}"> Sign In</a>
+        </small>
+      </div>
+
+  
+  
+    </div>
+  
+  </div>
+  
  
 {% endblock %}

@@ -26,19 +26,30 @@
         <!-- navigation bar    -->
         {%include 'shared/_nav.html' %}
 
-        <!-- body  -->
-  
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category , message  in messages %}
+                   <div class="notification {{ category }} is-light">
+                    {{ message }}
+                   </div>
+            {% endfor %} 
+        {% endif %}
+        {% endwith %}
 
 
+        <!-- body or content  -->
         {% block body %}
-
+           <!-- contents will be here -->
         {% endblock %}
 
+   
+ 
         <!-- footer -->
         <footer class="footer is-black">
-            <div class="content has-text-centered">
+            <div class="content has-text-centered ">
                 <p>
-                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                    <strong>Website</strong> by <a href="https://jgthms.com">Baba</a>. The source code is licensed
                     <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
                     is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
                 </p>

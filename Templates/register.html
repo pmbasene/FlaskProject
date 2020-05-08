@@ -1,8 +1,11 @@
 {% extends 'layouts/default.html' %}
 
+
+
+
 {% block body %}
 
-        <div class="container">
+        <!-- <div class="container">
           <h1 class="title">Register page</h1>
             <div>
                 <form method="POST" action="">
@@ -39,73 +42,103 @@
             <small class=""text-muted>
                 Already Have you an Account? <a href="{{ url_for("login") }}"> Sign In</a>
             </small>
-        </div>
+        </div> -->
  
 
 <!-- bulma  -->
 
+<h1 class="title">
+    Creer votre un compte
+</h1>
+
+
 <div class="columns">
-
-
   <div class="column is-offset-4 is-4">
-    
-    <form method="POST" action="">
+    <form method="POST" action="#">
         {{ form.hidden_tag() }}
 
           <div class="field">
             <!-- <label class="label">Username</label> -->
-            <div class="control has-icons-left has-icons-right">
+            <div class="control">
               <!-- <input class="input is-success" type="text" placeholder="Text input" value="bulma"> -->
               {{ form.username.label(class="label") }}
-              {{ form.username(class="input is-success ") }}
-              <!-- <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-check"></i>
-              </span> -->
+              {% if form.username.errors %}
+                    {{ form.username(class="input is-danger") }}
+                        <div class="help is-danger">
+                            {% for error in form.username.errors %}        
+                                    <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.username(class="input is-success") }}
+                {% endif %}
+    
             </div>
-            <p class="help is-success">This username is available</p>
+            
 
           </div>
           
           <div class="field">
-            <label class="label">Email</label>
-            <div class="control has-icons-left has-icons-right">
-              <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+            <!-- <label class="label">Email</label> -->
+            <div class="control">
+              <!-- <input class="input is-danger" type="email" placeholder="Email input" value="hello@"> -->
+             
+              {{ form.email.label(class="label") }}
+              {% if form.email.errors %}
+                    {{ form.email(class="input is-danger") }}
+                        <div class="help is-danger">
+                            {% for error in form.email.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>           
+                {% else %}
+                    {{ form.email(class="input is-success ") }}
+                {% endif %}
             </div>
-            <p class="help is-danger">This email is invalid</p>
+            <!-- <p class="help is-danger">This email is invalid</p> -->
           </div>
 
           <div class="field">
-            <label class="label">Password</label>
-            <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
+            <!-- <label class="label">Password</label> -->
+            <p class="control">
+              <!-- <input class="input" type="password" placeholder="Password"> -->      
+              {{ form.password.label(class="label") }}
+              {% if form.password.errors %}
+                    {{ form.password(class="input is-danger") }}
+                        <div class="help is-danger">
+                            {% for error in form.password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>     
+                {% else %}
+                    {{ form.password(class="input is-success ") }}
+                {% endif %}
             </p>
           </div>
 
           <div class="field">
-            <label class="label">Confirm</label>
-            <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
+            <!-- <label class="label">Confirm</label> -->
+            <p class="control">
+              <!-- <input class="input" type="password" placeholder="Password"> -->
+             
+              {{ form.confirm_password.label(class="label") }}
+              {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="input is-danger") }}
+                        <div class="help is-danger">
+                            {% for error in form.confirm_password.errors %}
+                              <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.confirm_password(class="input is-success ") }}
+                {% endif %}
             </p>
           </div>
           
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-link">Sign up</button>
+              <!-- <button class="button is-link">Sign up</button> -->
+              {{ form.submit( class = 'control button is-link') }}
             </div>
           </div>
     
@@ -116,8 +149,6 @@
         </div>
 
     </form>
-   
-
 
 
   </div>
