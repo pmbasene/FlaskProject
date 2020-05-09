@@ -1,0 +1,94 @@
+{% extends 'layouts/default.html' %}
+
+
+
+{% block body %}
+    <!-- banniere -->
+    <section class="hero is-large is-bold"> 
+        <!-- <img class="fit-picture" src="/blog/statics/img/ordi.jpg" alt="Grapefruit slice atop a pile of other slices"> -->
+            
+        <div class="hero-body has-text-centered">
+        <div class="container">
+            <h1 class="title">
+            Welcome to my Website
+            </h1>
+            <h2 class="subtitle">
+            Hero subtitle. Ceci sera ma banniere globale qui sera visible sur toutes les pages
+            </h2>
+        </div>
+        </div>
+    </section>
+
+
+    <div class="columns">
+        <div class="column is-three-quarters">
+
+
+            
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-8">
+                  <div class="tile">
+                    <div class="tile is-parent is-vertical">
+                      <article class="tile is-child box"> 
+                        <div>   <h1 class ="title"> <span class="icon"> <i class="fas fa-home"></i> </span> Nos Blogs</h1></div>
+                            <div>
+                              
+                                <p> Amet veniam velit dolor minim minim magna magna minim.
+                                Et occaecat sunt sunt culpa sit tempor sint occaecat deserunt veniam ex. 
+                                Pariatur do duis do consectetur id. Ullamco laboris dolore adipisicing fugiat dolor.
+                                Dolor consectetur occaecat irure ad id. <br>
+                                Pour visiter nos blogs, <a href="{{ url_for("blog") }}">cliquez sur le lien</a> </p> 
+                            </div>
+                      </article>
+                      <article class="tile is-child box">
+                        <!-- Put any content you want -->
+                      </article>
+                    </div>
+                    <div class="tile is-parent">
+                      <article class="tile is-child box">
+                        <!-- Put any content you want -->
+                      </article>
+                    </div>
+                  </div>
+                  <div class="tile is-parent">
+                    <article class="tile is-child box">
+                      <!-- Put any content you want -->
+                        
+                       
+                    
+                    </article>
+                  </div>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child box">
+                    <!-- Put any content you want -->
+ 
+                  </article>
+                </div>
+              </div>
+
+
+
+
+
+
+
+        </div>
+        <div class="column">Auto</div>
+        <div class="column">Auto</div>
+    </div>
+
+
+
+  
+
+
+
+    
+
+{% endblock %}
+
+
+
+
+

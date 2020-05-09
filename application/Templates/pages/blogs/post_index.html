@@ -1,0 +1,81 @@
+{% extends 'layouts/default.html' %}
+
+{% block css %} 
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+        
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title"> Blog page.</h1>
+            <small> Nombre d'articles - {{ posts|length}}</small>
+        </div>
+    </section>   
+    <div class="columns">
+        <div class="column is-6 is-offset-2">
+            {% for post in posts %}
+            <!-- <section class="section blog"> -->
+                <div class="container blog">
+                    <a href="#">  {{ post.author }}  </a>
+                    <small> {{post.date_posted}}</small>
+                    <h1 class="title"> <small> #{{ post.id }} </small> {{ post.title }}</h1>
+                    <p> {{ post.content |truncate (400) }} <a href="{{ url_for("blog_show" , id=post.id) }}"> Lire la suite</a> </p>
+                </div>
+            <!-- </section>               -->
+            {% endfor %}
+        </div>
+
+        <div class="column is-offset-1"> 
+            <div class="list is-hoverable">
+                <a class="list-item">
+                  Featured
+                </a>
+                <a class="list-item">
+                  All Posts
+                </a>
+                <a class="list-item is-active">
+                  Announcements
+                </a>
+                <a class="list-item">
+                  Business
+                </a>
+                <a class="list-item">
+                  Community
+                </a>
+                <a class="list-item">
+                  Data
+                </a>
+                <a class="list-item">
+                  Editor Tools
+                </a>
+                <a class="list-item">
+                  Education
+                </a>
+                <a class="list-item">
+                  Engineering
+                </a>
+                <a class="list-item">
+                  Events
+                </a>
+                <a class="list-item">
+                  Policy
+                </a>
+              </div>
+        </div>
+    </div>
+    <div>
+        <nav class="pagination is-small" role="navigation" aria-label="pagination">
+            <a class="pagination-previous">Previous</a>
+            <a class="pagination-next">Next page</a>
+            <ul class="pagination-list">
+            <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+            <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+            <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
+            <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+            <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
