@@ -2,23 +2,28 @@
 {% extends 'layouts/default.html' %}
 
 {% block body %}
+<!-- header -->
+<section class="hero is-light"> 
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title"> Blog : Detail.</h1>   
+      <h2 class="subtitle"><small> Full Text</small> </h2>
+    </div>
+  </div>
+</section>
 
-<!-- <div class="container blog">
-    <a href="#">  {{ post.author }}  </a>
-    <small> {{post.date_posted}}</small>
-    <h1 class="title"> <small> #{{ post.id }} </small> {{ post.title }}</h1>
-    <p> {{ post.content  }}  </p>
-</div> -->
-<div> <a href="{{ url_for("blog") }}">↪️</a> Retour aux publications</div>
+<div> <a href="{{ url_for('blog') }}">↪️</a> Retour aux publications</div>
 <div class="columns">
   <div class="column is-2">
     <a href="#"> Auteur:  {{ post.author }}  </a> <br>
     <small> Date de publication: {{post.date_posted}}</small>
   </div>
-  <div class="column">
+  <div class="column is-8">
     <div class="container blog"> 
-        <h1 class="title"> {{post.title }}</h1>
-        <p> {{ post.content }}  </p>
+        <h1 class="title">{{post.title }}</h1>
+        <div class="content is-medium">
+          <p>{{ post.content }}</p>
+        </div>
     </div>  
   </div>
   <!-- <div class="column">

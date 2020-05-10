@@ -5,12 +5,15 @@
 {% endblock %}
         
 {% block body %}
-    <section class="section">
-        <div class="container">
-            <h1 class="title"> Blog page.</h1>
-            <small> Nombre d'articles - {{ posts|length}}</small>
-        </div>
-    </section>   
+
+<section class="hero is-light"> 
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title"> Blog page.</h1>   
+      <h2 class="subtitle"><small> Nombre d'articles - {{ posts|length}}</small> </h2>
+    </div>
+  </div>
+</section>
     <div class="columns">
         <div class="column is-6 is-offset-2">
             {% for post in posts %}

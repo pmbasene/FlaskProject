@@ -1,6 +1,6 @@
 
 from flask import render_template, url_for, flash, redirect, request
-from application import app
+from application import app, db , bcrypt
 from application.forms import RegistrationForm , LoginForm
 from application.models import User, Post
 
@@ -75,8 +75,12 @@ def page_not_found(e):
 def register():
     form = RegistrationForm()
     if request.method =='POST' and form.validate_on_submit():   #and form.validate()  # envoyer un message flash de succes et retour a la page d'accueil
-        flash(f'Account created for {form.username.data}!', 'is-success')
-        return redirect(url_for('home'))
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf8')
+        user  = User(username = form.username.data, email=form.email.data , password =  password_hash )
+        db.session.add(user)
+        db.session.commit()
+        flash(f' Welcome you are logged in!', 'is-success')
+        return redirect(url_for('login'))
     return render_template('register.html', title = 'Register' , form=form)
 
 
