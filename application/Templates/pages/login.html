@@ -7,21 +7,14 @@
 
 <!-- content -->
 {% block body %}
-<h1 class="title">
-    Connectez vous à votre compte
-</h1>
-
+<h1 class="title"> Connectez vous à votre compte </h1>
 
 <div class="columns">
     <div class="column is-offset-4 is-4">
       <form method="POST" action="#">
           {{ form.hidden_tag() }}
-            
             <div class="field ">
-              <!-- <label class="label">Email</label> -->
-              <div class="control">
-                <!-- <input class="input is-danger" type="email" placeholder="Email input" value="hello@"> -->
-               
+              <div class="control">               
                 {{ form.email.label(class="label") }}
                 {% if form.email.errors %}
                       {{ form.email(class="input is-danger") }}
@@ -34,13 +27,9 @@
                       {{ form.email(class="input is-success ") }}
                   {% endif %}
               </div>
-              <!-- <p class="help is-danger">This email is invalid</p> -->
             </div>
-  
             <div class="field">
-              <!-- <label class="label">Password</label> -->
               <p class="control">
-                <!-- <input class="input" type="password" placeholder="Password"> -->      
                 {{ form.password.label(class="label") }}
                 {% if form.password.errors %}
                       {{ form.password(class="input is-danger") }}
@@ -66,20 +55,17 @@
             <div class="field">
               <div class="control">
                 <!-- <button class="button is-link">Sign up</button> -->
-                {{ form.submit( class = 'control button is-link') }}
+                {{ form.submit(class='button  is-block is-info is-large is-fullwidth') }}
               </div>
             </div>
-            <small>Have you forget your email or/and password ? <a href="#"> Click here</a></small>
       </form>
-
-      <div class="border-top pt-3">
-        <small class=""text-muted>
-           Need an account ? <a href="{{ url_for('register') }}"> Sign In</a>
-        </small>
-      </div>
-
+      <p class="has-text-grey">
+        <a href="{{ url_for('register') }}">Sign Up now</a> &nbsp;·&nbsp;
+        <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+        <a href="../">Need Help?</a>
+      </p>
     </div>
-  
+
   </div>
   
  

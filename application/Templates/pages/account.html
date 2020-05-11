@@ -1,0 +1,105 @@
+{% extends 'layouts/default.html' %}
+
+{% block body %}
+    <section class="hero is-light"> 
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">  Account Informations </h1>
+        </div>
+      </div>
+    </section>
+
+    <div class="columns">
+      <div class="column is-2 is-offset-1">
+        <figure class="image is-128x128">
+            <img class="is-rounded" src="{{ image_file }}">
+        </figure>
+          <article class="media">   
+            <div class="media-content">
+              <div class="content">
+                    <h2 class="subtitle is-4"> {{ current_user.username }} </h2> 
+                    <p>{{ current_user.email }}</p>
+              </div>
+            </div>
+        </article>
+
+
+      </div>
+      <div class="column is-4 is-offset-1">
+        
+        <form method="POST" action="#", enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+    
+              <div class="field">
+                <!-- <label class="label">Username</label> -->
+                <div class="control">
+                  <!-- <input class="input is-success" type="text" placeholder="Text input" value="bulma"> -->
+                  {{ form.username.label(class="label") }}
+                  {% if form.username.errors %}
+                        {{ form.username(class="input is-danger") }}
+                            <div class="help is-danger">
+                                {% for error in form.username.errors %}        
+                                        <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.username(class="input") }}
+                    {% endif %}   
+                        
+                </div>
+            
+              </div>
+              
+              <div class="field">
+                <div class="control">
+                  {{ form.email.label(class="label") }}
+                  {% if form.email.errors %}
+                        {{ form.email(class="input is-danger") }}
+                            <div class="help is-danger">
+                                {% for error in form.email.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            </div>           
+                    {% else %}
+                        {{ form.email(class="input") }}
+                    {% endif %}
+                </div>
+              </div>
+
+              <div class="field">
+              <div class="file">
+                  <label class="file-label">
+            
+                       <div> {{ form.picture.label() }} </div>
+                        {{ form.picture(class="file-input") }}
+                   
+                        {% if form.picture.errors %}
+                              {% for error in form.picture.errors %}
+                              <span class="help is-danger">{{ error }}</span> <br>
+                        {% endfor %}
+                        {% endif %}
+                        <span class="file-cta">
+                            <span class="file-icon"> <i class="fas fa-upload"></i>   </span>
+                            <span class="file-label">  Choose File </span>
+                        </span>
+        
+                </label>
+              </div> 
+            </div>               
+              <div class="field is-grouped">
+                <div class="control">
+                  <!-- <button class="button is-link">Sign up</button> -->
+                  {{ form.submit( class = 'control button is-link') }}
+                </div>
+              </div>
+      
+        </form>
+
+
+      </div>
+  
+    </div>
+
+
+
+{% endblock %}

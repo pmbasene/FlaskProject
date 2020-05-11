@@ -8,27 +8,72 @@
     <div class="container">
       <h1 class="title"> Blog : Detail.</h1>   
       <h2 class="subtitle"><small> Full Text</small> </h2>
+      
+ 
+      {% if posts.author == current_user %}  
+    
+        <div class="field is-grouped">
+            <p class="control">
+          <!-- <button class="button "> -->
+            <a class = "button is-link" href="{{ url_for('update_post', id=posts.id) }}"> Update Post </a>
+          <!-- </button> -->
+            </p>
+           <p class="control">
+                <!-- <button class="button is-danger"> -->
+                  <form action="{{ url_for('delete_post', id=posts.id) }}", method="POST">
+                   <input class = "button is-danger" type="submit" value="Delete" >
+                 </form>
+                 <!-- </button> -->
+             </p>
+         </div>
+      {% endif %}
+
     </div>
   </div>
 </section>
 
 <div> <a href="{{ url_for('blog') }}">↪️</a> Retour aux publications</div>
 <div class="columns">
-  <div class="column is-2">
-    <a href="#"> Auteur:  {{ post.author }}  </a> <br>
-    <small> Date de publication: {{post.date_posted}}</small>
+  <div class="column is-3">
+    <a href="#"> Auteur:  {{ posts.author.username }}  </a> <br>
+    <small> Date de publication: {{posts.date_posted.strftime('%Y-%m-%d')}}</small>
   </div>
   <div class="column is-8">
-    <div class="container blog"> 
-        <h1 class="title">{{post.title }}</h1>
-        <div class="content is-medium">
-          <p>{{ post.content }}</p>
-        </div>
-    </div>  
+          <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64"><img src="{{ url_for('static', filename='src/img/profile_pics/'+ posts.author.image_file) }}"> </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>{{ posts.title }} </strong>  
+                  <br>
+                  {{ posts.content}}
+                </p>
+              </div>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <a class="level-item">
+                    <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                  </a>
+                  <a class="level-item">
+                    <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                  </a>
+                  <a class="level-item">
+                    <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+            <!-- <div class="media-right">
+              <button class="delete"></button>
+            </div> -->
+        </article>
   </div>
-  <!-- <div class="column">
-    Fourth column
-  </div> -->
+
 </div>
+
+
+
 
 {% endblock %}
