@@ -171,7 +171,7 @@ def update_post(id):
         form.title.data = post.title
         form.content.data = post.content
     return render_template('pages/blogs/create_post.html', title='Update Post', 
-    form= form, legend = "Mise à jour du Post" )
+           form= form, legend = "Mise à jour du Post" )
 
   
 @app.route('/blog/post/<int:id>/delete', methods=['POST'])
@@ -184,6 +184,12 @@ def delete_post(id):
     db.session.commit()
     flash(' Your Post has been deleted!', 'is-success')
     return redirect(url_for('home'))
+
+
+@app.route('/testjs')
+def testjs():
+    return render_template('testjs.html')
+
 
     
     

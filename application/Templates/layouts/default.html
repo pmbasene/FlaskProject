@@ -12,7 +12,9 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-        {% block css %}           {% endblock %}
+        {% block css %}    
+        <!-- css content        -->
+        {% endblock %}
        
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> 
         <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>   
@@ -22,10 +24,13 @@
              
         <!-- header -->
 
+        
         <!-- navigation bar    -->
         {%include 'shared/_nav.html' %}
+        <!-- end navigation bar    -->
 
-
+        <!-- All flash message will appear here between the navigation bar and content block. 
+             It will see in every page it will call . Thats why we put it here -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category , message  in messages %}
@@ -35,15 +40,13 @@
             {% endfor %} 
         {% endif %}
         {% endwith %}
-
+        <!-- end flash -->
 
         <!-- body or content  -->
         {% block body %}
            <!-- contents will be here -->
         {% endblock %}
 
-   
- 
         <!-- footer -->
         <footer class="footer is-black">
             <div class="content has-text-centered ">
