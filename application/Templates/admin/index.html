@@ -1,0 +1,17 @@
+<!-- Le dossier admin doit etre en top level car un sous direct du dossier template -->
+{% extends 'admin/master.html' %}   
+
+{% block body %}
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">This is my Admin page</h1>
+      <h2 class="subtitle"> Hello {{current_user.name}}</h2>
+    </div>
+    <div>
+     <p>Go back to website page</p> 
+     <a class="button" href="{{ url_for('account') }}"> click here </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

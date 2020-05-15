@@ -1,6 +1,6 @@
 from datetime import datetime
 from application import db, login_manager, admin_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -15,10 +15,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default ="default.jpg")
+    is_admin = db.Column(db.Boolean, default=False)
     post = db.relationship('Post', backref='author', lazy = True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}',  '{self.image_file}' )"
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +33,19 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.content}', '{self.date_posted}')"
 
 
+# Admin Model
 
-admin_manager.add_view(ModelView(User, db.session))
-admin_manager.add_view(ModelView(Post, db.session))
+class ControllerAdmin(ModelView):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def is_not_accessible(self):
+        return "You are not authorized to access admin dashboard"
+
+admin_manager.add_view(ControllerAdmin(User, db.session))
+admin_manager.add_view(ControllerAdmin(Post, db.session))
+
+        

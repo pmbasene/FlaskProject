@@ -1,6 +1,7 @@
 import os
 import secrets
 from PIL import Image
+# from flask_sqlalchemy import sqlalchemy # pour utliser la fonction desc de sqlalchemy . Remarque # from flask_sqlalchemy.sqlalchemy import desc , ne marche pas , why??
 from flask import render_template, url_for, flash, redirect, request, abort
 from application import app, db , bcrypt
 from application.forms import RegistrationForm , LoginForm, UpdateAccountForm, PostFrom
@@ -53,7 +54,9 @@ def about():
 
 @app.route('/blog/')
 def blog():
-    post = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,  per_page=3)
+    # post = Post.query.order_by(sqlalchemy.desc(Post.date_posted)).all()    # pour trier du plus recent ...
     return render_template('pages/blogs/post_index.html',  posts=post, title='All Posts')
 
 @app.route('/blog/post/<int:id>')
@@ -66,7 +69,6 @@ def blog_show(id):
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('errors/404.html'), 404
-
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -105,7 +107,6 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _ ,f_ext = os.path.splitext(form_picture.filename)
@@ -119,7 +120,6 @@ def save_picture(form_picture):
 
 
     return picture_fn
-
 
 @app.route('/account', methods=['GET','POST'])
 @login_required
@@ -172,8 +172,7 @@ def update_post(id):
         form.content.data = post.content
     return render_template('pages/blogs/create_post.html', title='Update Post', 
            form= form, legend = "Mise à jour du Post" )
-
-  
+ 
 @app.route('/blog/post/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_post(id):
@@ -186,9 +185,15 @@ def delete_post(id):
     return redirect(url_for('home'))
 
 
+# my stuff
 @app.route('/testjs')
 def testjs():
     return render_template('testjs.html')
+
+
+@app.route('/admin')
+def admin():
+    return render_template('admin/index.html')
 
 
     

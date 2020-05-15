@@ -1,24 +1,24 @@
 
-p{
+/* p{
    text-align: justify;
    background: #ffffff;
    padding: 10px 20px;
    border:1px solid #dddddd;
    border-radius: 3px ;
    margin-bottom:20px ;
-}
+} */
 
 .title {
     color: #444444;
     
 }
 
-.container.blog  {
+/* .container.blog  { */
         /* font-size: 150%;  */
         /* background-color:#93a5cc;  */
-        border-color: rosybrown;
+        /* border-color: rosybrown; */
         /* padding-left: 15px; */
-        }
+        /* } */
 
 .pagination{
     margin: 0px 50px ;
@@ -27,5 +27,10 @@ p{
 
 .list{
     margin-right: 10px;
+
+}
+
+.media-left{
+    color: red;
 
 }

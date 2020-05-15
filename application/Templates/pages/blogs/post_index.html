@@ -10,97 +10,104 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title"> Blog page.</h1>   
-      <h2 class="subtitle"><small> Nombre d'articles - {{ posts|length}}</small> </h2>
+      <h2 class="subtitle"><small> Nombre d'articles - {{ posts.total }} </small> </h2>
     </div>
   </div>
 </section>
     <div class="columns">
         <div class="column is-6 is-offset-2">
-            {% for post in posts %}
-            <!-- <section class="section blog"> -->
-              <article class="media">
-                <figure class="media-left">
-                  <p class="image is-128x128"><img src="{{ url_for('static', filename='src/img/profile_pics/'+ post.author.image_file) }}"> </p>
-                </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{{ post.title }} </strong> <small>{{ post.author.username }}</small> <small>{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-                      <br>
-                      {{ post.content |truncate (400) }} <a href="{{ url_for('blog_show', id=post.id) }}"> Lire la suite</a>
-                    </p>
-                  </div>
-                  <nav class="level is-mobile">
-                    <div class="level-left">
-                      <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                      </a>
-                      <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                      </a>
-                      <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                      </a>
+            {% for post in posts.items %}
+              <!-- <section class="section blog"> -->
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-128x128"><img src="{{ url_for('static', filename='src/img/profile_pics/'+ post.author.image_file) }}"> </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p>
+                        <strong>{{ post.title }} </strong> <small>{{ post.author.username }}</small> <small>{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                        <br>
+                        {{ post.content |truncate (200) }} <a href="{{ url_for('blog_show', id=post.id) }}"> Lire la suite</a>
+                      </p>
                     </div>
-                  </nav>
-                </div>
-                <!-- <div class="media-right">
-                  <button class="delete"></button>
-                </div> -->
-            </article>
+                    <nav class="level is-mobile">
+                      <div class="level-left">
+                        <a class="level-item">
+                          <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                        </a>
+                        <a class="level-item">
+                          <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                        </a>
+                        <a class="level-item">
+                          <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                        </a>
+                      </div>
+                    </nav>
+                  </div>
+              </article>
   
             {% endfor %}
+
+          <div>
+            <nav class="pagination is-small" role="navigation" aria-label="pagination">
+                  <a class="pagination-previous">Previous</a>
+                  <a class="pagination-next">Next page</a>
+              <ul class="pagination-list">
+                {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                {% if posts.page == page_num %}
+                <li><a class="pagination-link" href="{{ url_for('blog' , page=page_num,) }}"> {{ page_num }} </a>
+                  {% else %}
+                <li><a class="pagination-link is-current" href="{{ url_for('blog' , page=page_num,) }}"> {{ page_num }} </a>
+                  {% endif %}
+                  {% else %}
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+
+
+
+
+
         </div>
 
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 <!-- information lateral -->
         <div class="column is-offset-1"> 
             <div class="list is-hoverable">
                 <a class="list-item">
-                  Featured
+                  Forum
                 </a>
                 <a class="list-item">
-                  All Posts
+                  Les 5 derniers posts
                 </a>
                 <a class="list-item is-active">
                   Announcements
                 </a>
                 <a class="list-item">
-                  Business
+                  Toutes Les videos
                 </a>
                 <a class="list-item">
-                  Community
+                  Evenements
                 </a>
                 <a class="list-item">
-                  Data
+                  La comminunauté
                 </a>
                 <a class="list-item">
-                  Editor Tools
+                  Promotion 2107
                 </a>
                 <a class="list-item">
-                  Education
+                  Promotion 2018
                 </a>
                 <a class="list-item">
-                  Engineering
+                  Promotion 2107
                 </a>
                 <a class="list-item">
-                  Events
+                  Evenements
                 </a>
                 <a class="list-item">
                   Policy
@@ -111,19 +118,8 @@
 
 
     <!-- pagination -->
-    <div>
-        <nav class="pagination is-small" role="navigation" aria-label="pagination">
-            <a class="pagination-previous">Previous</a>
-            <a class="pagination-next">Next page</a>
-            <ul class="pagination-list">
-            <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
-            <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
-            <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
-            </ul>
-        </nav>
-    </div>
+
+          
+
+
 {% endblock %}
