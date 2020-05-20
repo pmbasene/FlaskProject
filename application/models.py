@@ -39,6 +39,7 @@ class Post(db.Model):
 class Editor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     html = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(20), nullable=True)
 
 
 
@@ -57,5 +58,4 @@ class ControllerAdmin(ModelView):
 admin_manager.add_view(ControllerAdmin(User, db.session))
 admin_manager.add_view(ControllerAdmin(Post, db.session))
 admin_manager.add_view(ControllerAdmin(Editor, db.session))
-
         
