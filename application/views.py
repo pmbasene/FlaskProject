@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from application import app, db , bcrypt
 from application.forms import RegistrationForm , LoginForm, UpdateAccountForm, PostFrom
-from application.models import User, Post
+from application.models import User, Post, Editor
 from flask_login import login_user, current_user, logout_user, login_required
 
 posts = [
@@ -38,6 +38,14 @@ posts = [
                 'date_posted':'13-04-2020'    
             }
         ]
+
+# filter personnalité tres utile
+# @app.template_fliter('date_normale')
+# def date_normale(dt):
+#     return dt.strftime('%d %b %Y')
+
+
+
 
 @app.route('/')
 @app.route('/home')
@@ -101,6 +109,16 @@ def login():
         else:
             flash('Login Unsuccessul. Try again! Your credentials is false', 'is-danger')
     return render_template('pages/login.html', title = 'login' , form=form)
+
+
+@app.route('/admin', methods=['GET','POST'])
+def admin():
+    form = AdminForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@gmail.com' and form.password.data == 'admin':
+            print('youre login !!!')
+            redirect(url_for('home'))
+    return render_template('admin/index.html', form=form)
 
 @app.route('/logout')
 def logout():
@@ -191,13 +209,43 @@ def testjs():
     return render_template('testjs.html')
 
 
-@app.route('/admin')
-def admin():
-    return render_template('admin/index.html')
+
+# -----route for testing----- 
+
+@app.route('/garage')
+def garage():
+    return render_template('pages/garage.html', title='Garage tools')
 
 
-    
-    
+@app.route('/summernote', methods=['POST', 'GET'])
+def summernote():
+    if request.method == 'POST' :
+        editor = Editor(html=request.form.get('editordata'))
+        print(request.form.get('editordata'))
+        db.session.add(editor)
+        db.session.commit()
+        return 'Posted Data'
+        # return redirect(url_for('display'))
+    return render_template('docEssai/summernote.html')
+
+
+@app.route('/display')
+def display():
+    posts = Editor.query.all()
+    print(posts)
+    # return 'data received'
+    return render_template('docEssai/display.html', posts=posts)
+
+
+
+
+# @app.route('/display/<int:id>')
+# def display(id):
+#     posts = Editor.query.get(id)
+#     print(posts)
+#     # return 'data received'
+#     return render_template('docEssai/display.html', posts=posts)
+
 
     
     

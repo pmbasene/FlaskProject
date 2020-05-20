@@ -7,72 +7,73 @@
 </nav> -->
 
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-      </a>
-  
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item" href="{{ url_for('home') }}">  Home </a>
-        <a class="navbar-item" href="{{ url_for('blog') }}">  Blog </a>
-        <a class="navbar-item" href="{{ url_for('contact') }}">  Contact  </a>
-        <a class="navbar-item" href="{{ url_for('about') }}">  About </a>
-       
-        <div class="navbar-item has-dropdown is-hoverable"> 
-          <a class="navbar-link"> Mes Projets  </a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item"> AWS Management</a>
-            <a class="navbar-item"> Weather API</a>
-            <a class="navbar-item">  N/A</a>
-            <hr class="navbar-divider">
-            <a class="navbar-item"> Mon CV</a>
-          </div>
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{{ url_for('home') }}"> Home </a>
+      <a class="navbar-item" href="{{ url_for('blog') }}"> Blog </a>
+      <a class="navbar-item" href="{{ url_for('contact') }}"> Contact </a>
+      <a class="navbar-item" href="{{ url_for('about') }}"> About </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link"> Mes Projets </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item"> Forum </a>
+          <a class="navbar-item"> AWS Management</a>
+          <a class="navbar-item"> Weather API</a>
+          <a class="navbar-item" href="{{ url_for('garage') }}"> Garage</a>
+          <a class="navbar-item" href="{{ url_for('summernote') }}"> wysiwyg</a>
+          <hr class="navbar-divider">
+          <a class="navbar-item"> Curriculum V</a>
         </div>
       </div>
-  
-      <div class="navbar-end">
-        {% if current_user.is_authenticated %}
-        <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link"> Your account </a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" href="{{ url_for('new_post') }}"> New Post</a>
-                  <a class="navbar-item" href="{{ url_for('account')  }}"> {{ current_user.username }} profile </a>
-                  <hr class="navbar-divider">
-                  <!-- <a class="navbar-item"> Mon CV</a> -->
-                  <a class="navbar-item is-danger" href="{{ url_for('logout')   }}"> Logout </a>
-                </div>
-              </div>
+    </div>
 
-            <!-- <div class="navbar-item">
+    <div class="navbar-end">
+      {% if current_user.is_authenticated %}
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link"> Your account </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{{ url_for('new_post') }}"> New Post</a>
+          <a class="navbar-item" href="{{ url_for('account')  }}"> {{ current_user.username }} profile </a>
+          <hr class="navbar-divider">
+          <!-- <a class="navbar-item"> Mon CV</a> -->
+          <a class="navbar-item is-danger" href="{{ url_for('logout')   }}"> Logout </a>
+        </div>
+      </div>
+
+      <!-- <div class="navbar-item">
               <div class="buttons">
                 <a class="button is-info" href="{{ url_for('new_post') }}"> <strong>New Post</strong>  </a>
                 <a class="button is-info" href="{{ url_for('account') }}"> <strong>{{ current_user.username }}</strong>  </a>
                 <a class="button is-danger" href="{{ url_for('logout') }}"> Logout</a>
               </div> -->
 
-            </div>
-          {% else %}
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-primary" href="{{ url_for('register') }}"> <strong>Sign up</strong>  </a>
-                <a class="button is-light" href="{{ url_for('login') }}"> Log in</a>
-              </div>
-            </div>
-          {% endif %}
-
-
-      </div>
-
     </div>
-  </nav>
+    {% else %}
+    <div class="navbar-item">
+      <div class="buttons">
+        <a class="button is-primary" href="{{ url_for('register') }}"> <strong>Sign up</strong> </a>
+        <a class="button is-light" href="{{ url_for('login') }}"> Log in</a>
+      </div>
+    </div>
+    {% endif %}
 
-  
+
+  </div>
+
+  </div>
+</nav>

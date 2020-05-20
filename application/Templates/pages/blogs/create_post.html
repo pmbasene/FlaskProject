@@ -4,73 +4,61 @@
 
 {% block body %}
 
-<section class="hero is-light"> 
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title"> {{ legend }}</h1>
-         
-        <h2 class="subtitle">Partage un post avec vos amis </h2>
-      </div>
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title"> {{ legend }}</h1>
+      <h2 class="subtitle">Partage un post avec vos amis </h2>
     </div>
-  </section>
+  </div>
+</section>
 
-  
 
 <div class="columns">
-    <div class="column is-offset-4 is-4">
-      <form method="POST" action="#">
-        {{ form.hidden_tag() }}
+  <div class="column is-offset-4 is-4">
+    <form method="POST" action="#">
+      {{ form.hidden_tag() }}
+      <div class="field">
+        {{ form.title.label(class="label") }}
+        {% if form.title.errors %}
+        {{ form.title(class="input is-danger") }}
+        <div class="help is-danger">
+          {% for error in form.title.errors %}
+          {{ error }}
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.title(class="input") }}
+        {% endif %}
+      </div>
 
-           <div class="field">
-            {{ form.title.label(class="label") }}
-            {% if form.title.errors %}
-                  {{ form.title(class="input is-danger") }}
-            <!-- <div class="control">
-              <input class="input is-primary" type="text" placeholder="Titre">
-            </div> -->
-                 <div class="help is-danger">
-                  {% for error in form.title.errors %}
-                        {{ error }}
-                   {% endfor %}
-                  </div>           
-                  {% else %}
-                   {{ form.title(class="input is-success ") }}
-                  {% endif %}
-            </div>
-
-            <div class="field">
-                {{ form.content.label(class="label") }}
-                {% if form.content.errors %}
-                      {{ form.content(class="input is-danger") }}
-                <!-- <div class="control">
+      <div class="field">
+        {{ form.content.label(class="label") }}
+        {% if form.content.errors %}
+        {{ form.content(class="input is-danger") }}
+        <!-- <div class="control">
                   <input class="input is-primary" type="text" placeholder="Titre">
                 </div> -->
-                     <div class="help is-danger">
-                      {% for error in form.content.errors %}
-                            {{ error }}
-                       {% endfor %}
-                      </div>           
-                      {% else %}
-                       {{ form.content(class="textarea is-success ") }}
-                      {% endif %}
-                </div>
-      
+        <div class="help is-danger">
+          {% for error in form.content.errors %}
+          {{ error }}
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.content(class="textarea") }}
+        {% endif %}
+      </div>
 
-              <div class="field">
-                <div class="control">
-                  <!-- <button class="button is-link">Sign up</button> -->
-                  {{ form.submit(class='button  is-info') }}
-                </div>
-              </div>
-          
-      </form>
-
-    </div>
-
+      <div class="field">
+        <div class="control">
+          <!-- <button class="button is-link">Sign up</button> -->
+          {{ form.submit(class='button  is-info') }}
+        </div>
+      </div>
+    </form>
   </div>
+</div>
 
 
 
 {% endblock %}
-
-

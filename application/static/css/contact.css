@@ -1,0 +1,15 @@
+/* .column{
+    text-align: justify;
+    padding: 10px 20px;
+    border:1px solid #dddddd;
+    border-radius: 3px ;
+    margin-bottom:20px ;
+ } */
+
+.column.column-center{
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border:1px solid #dddddd;
+    border-radius: 3px ;
+    margin-bottom:20px ;
+}

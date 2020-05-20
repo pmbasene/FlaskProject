@@ -1,78 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     
 
-        <!-- TITLE -->
-        {% if title  %}   <title>Baba - {{ title }}  </title>  {% else %}  <title>Baba</title> {% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- TITLE -->
+    {% if title  %} <title>Baba - {{ title }} </title> {% else %} <title>Baba</title> {% endif %}
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-
-        {% block css %}    
-        <!-- css content        -->
-        {% endblock %}
-
-
-    </head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}">
+    {% block css %}
+    <!-- css content        -->
+    {% endblock %}
+</head>
 
 
-    <body>  
-             
-        <!-- HEADER -->
+<body>
+    <!-- navbar    -->
+    {%include 'shared/_nav.html' %}
+    <!-- end navbar    -->
 
-        <!-- navigation bar    -->
-        {%include 'shared/_nav.html' %}
-        <!-- end navigation bar    -->
-
-        <!-- All flash message will appear here between the navigation bar and content block. 
+    <!-- HEADER -->
+    
+    <!-- All flash message will appear here between the navigation bar and content block. 
              It will see in every page it will call . Thats why we put it here -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category , message  in messages %}
-                   <div class="notification {{ category }} is-light">
-                    {{ message }}
-                   </div>
-            {% endfor %} 
-        {% endif %}
-        {% endwith %}
-        <!-- end flash -->
-
-        <!-- BODY OF CONTENT  -->
-
-        {% block body %}
-
-        <!-- contents will be here -->
-
-        {% endblock %}
-
-
-        <!-- JAVASCRIPT -->
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-        <!-- chatbot dialogflow integrate -->
-        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-        <df-messenger intent="WELCOME" chat-title="chatBotFatoch" agent-id="a341b4ff-8a6f-47ef-af90-ab6de5a8f35a"
-            language-code="fr">
-        </df-messenger>
-
-        {% block js %}
-        <!-- javascript content        -->
-        {% endblock %}
-
-        <!-- FOOTER -->
-        <footer class="footer is-black">
-            <div class="content has-text-centered ">
-                <p>
-                    <strong>Website</strong> by <a href="https://jgthms.com">Baba</a>. The source code is licensed
-                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-                </p>
+            <div class="notification {{ category }} is-light">
+                {{ message }}
             </div>
-        </footer>
-    </body>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- end flash -->
+
+    <!-- BODY OF CONTENT  -->
+
+    {% block body %}
+    <!-- contents will be here -->
+    {% endblock %}
+
+    <!-- JAVASCRIPT -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    <!-- chatbot dialogflow integrate -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME" chat-title="chatBotFatoch" agent-id="a341b4ff-8a6f-47ef-af90-ab6de5a8f35a"
+        language-code="fr">
+    </df-messenger>
+    {% block js %}
+    <!-- javascript content        -->
+    {% endblock %}
+
+    <!-- FOOTER -->
+    {% include "shared/_footer.html" %}
+</body>
+
 </html>

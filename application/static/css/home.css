@@ -1,0 +1,18 @@
+/* body{
+    background-color: #eeeeee;
+} */
+
+.container{
+    /* background-color: rgb(67, 62, 136); */
+    color: aliceblue;
+    text-align: center;  
+    position: relative;
+    top:-400px;
+    /* top: 10%; */
+    /* height: 100px; */
+}
+
+.title {
+    color: #ffffff;
+    
+}

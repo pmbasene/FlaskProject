@@ -33,6 +33,15 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.content}', '{self.date_posted}')"
 
 
+
+# model pour les tests
+
+class Editor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    html = db.Column(db.Text, nullable=False)
+
+
+
 # Admin Model
 
 class ControllerAdmin(ModelView):
@@ -47,5 +56,6 @@ class ControllerAdmin(ModelView):
 
 admin_manager.add_view(ControllerAdmin(User, db.session))
 admin_manager.add_view(ControllerAdmin(Post, db.session))
+admin_manager.add_view(ControllerAdmin(Editor, db.session))
 
         

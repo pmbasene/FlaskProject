@@ -1,0 +1,59 @@
+{% extends 'layouts/default.html' %}
+
+{% import "macro/macro_card.html" as mc %}  
+
+
+{% block body %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">This is my Contact page</h1>
+        <h2 class="subtitle">
+            <strong>Codiing ...</strong>
+        </h2>
+    </div>
+</section>
+
+<div class="columns ">
+    {% for post in posts %}                     
+     
+        {{ mc.cardPost(author="baba" , email = "pmbasene@gmail.com",  
+                    content=post.html, date = "20 fev 2020" ) }}
+          
+            {% if loop.index is divisibleby 3 %}
+            <!-- <div class="columns"> 
+             </div> -->
+            {{ loop.index }} <br>
+            {% endif %}
+    {% endfor %}
+</div>
+
+      
+
+
+
+<div class="columns">
+  <div class="column">
+    First column
+  </div>
+  <div class="column">
+    Second column
+  </div>
+  <div class="column">
+    Third column
+  </div>
+  <div class="column">
+    Fourth column
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
