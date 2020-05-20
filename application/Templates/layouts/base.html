@@ -1,0 +1,19 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TITLE -->
+    {% if title  %} <title>Baba - {{ title }} </title> {% else %} <title>tiitre default</title> {% endif %}
+    
+    {% block head_base %}
+    
+    {% endblock %}
+</head>
+
+    <body>
+        {% block body_base %}
+        
+        {% endblock %}
+    </body>
+
+</html>

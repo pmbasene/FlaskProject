@@ -54,3 +54,20 @@ Donner la possibilite à des users :
 ### Gestionnaire de mon compte aws
 (editing)
 
+
+### Architecture template 
+
+heritage
+```
+layouts :                               base.html
+                                            |
+                                       default.html
+                                       _____|______
+
+
+
+
+
+
+```
+

@@ -224,8 +224,8 @@ def summernote():
         print(request.form.get('editordata'))
         db.session.add(editor)
         db.session.commit()
-        return 'Posted Data'
-        # return redirect(url_for('display'))
+        # return 'Posted Data'
+        return redirect(url_for('display'))
     return render_template('docEssai/summernote.html')
 
 
