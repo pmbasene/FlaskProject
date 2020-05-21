@@ -43,6 +43,16 @@ class Editor(db.Model):
 
 
 
+class Weather(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    # date_posted = db.Column(db.DateTime, nullable=True, default = datetime.utcnow ) # afin quelle soit facultative
+    # image_file = db.Column(db.String(20), nullable=True, default ="default.jpg")
+    
+    
+
+
+
 # Admin Model
 
 class ControllerAdmin(ModelView):
@@ -58,4 +68,5 @@ class ControllerAdmin(ModelView):
 admin_manager.add_view(ControllerAdmin(User, db.session))
 admin_manager.add_view(ControllerAdmin(Post, db.session))
 admin_manager.add_view(ControllerAdmin(Editor, db.session))
+admin_manager.add_view(ControllerAdmin(Weather, db.session))
         

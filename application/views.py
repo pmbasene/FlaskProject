@@ -1,3 +1,4 @@
+import requests
 import os
 import secrets
 from PIL import Image
@@ -5,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from application import app, db , bcrypt
 from application.forms import RegistrationForm , LoginForm, UpdateAccountForm, PostFrom
-from application.models import User, Post, Editor
+from application.models import User, Post, Editor, Weather
 from flask_login import login_user, current_user, logout_user, login_required
 
 posts = [
@@ -212,16 +213,16 @@ def testjs():
 
 # -----route for testing----- 
 
-@app.route('/garage')
+@app.route('/garage')     # for integrating video format
 def garage():
     return render_template('pages/garage.html', title='Garage tools')
 
 
-@app.route('/summernote', methods=['POST', 'GET'])
+@app.route('/summernote', methods=['POST', 'GET'])  # for integrating text editor
 def summernote():
     if request.method == 'POST' :
         editor = Editor(html=request.form.get('editordata'))
-        print(request.form.get('editordata'))
+        # print(request.form.get('editordata'))
         db.session.add(editor)
         db.session.commit()
         # return 'Posted Data'
@@ -229,14 +230,12 @@ def summernote():
     return render_template('docEssai/summernote.html')
 
 
-@app.route('/display')
+@app.route('/display')   # linked to summernote route , able to display post 
 def display():
     posts = Editor.query.all()
     print(posts)
     # return 'data received'
     return render_template('docEssai/display.html', posts=posts)
-
-
 
 
 # @app.route('/display/<int:id>')
@@ -247,6 +246,66 @@ def display():
 #     return render_template('docEssai/display.html', posts=posts)
 
 
+
+
+
+
+@app.route('/apiWeather', methods=['GET'])
+def apiWeather():
+    #    # todo
+        # add city name in data database for query throught a search bar
+        # create column side which contains all regions
+
+    collectData = []
+    cities = Weather.query.order_by(Weather.date_posted.desc()).all()
     
+    for city in cities:
+        resp = get_weather_data(city.name)
+        data = { 
+            'city'        : city.name ,
+            'temp'        : resp['main']['temp'],
+            'pressure'    : resp['main']['pressure'],
+            'humidity'    : resp['main']['humidity'],
+            'description' : resp['weather'] [0]['description'] ,
+            'icon'        : resp['weather'][0]['icon'] ,
+            'wind_speed' :  resp['wind']['speed'],
+            # 'wind_deg'    : resp['wind']['deg'],
+        }
+        collectData.append(data)
+    return render_template('docEssai/apiWeather.html',collectData=collectData)
     
+@app.route('/apiWeather', methods=['POST'])
+def apiWeather_post():
+    city = request.form.get('city')
+    if city: # check if input , permet d"empecher d'entrer des donnees vides
+        check_existing_city = Weather.query.filter_by(name=city).first()
+        if not check_existing_city:  # si la ville n'hesite pas deja dans la db. il permet d'eviter la replication
+            resp = get_weather_data(city)    # on appelle la fonction renvoie le dataset originel de openweather
+            if resp['cod'] == 200:
+                weather = Weather(name=city)
+                db.session.add(weather)
+                db.session.commit()
+                flash(f'Good! Les conditions climatiques pour la ville de {city} sont bien disponibles', 'is-success')
+            else:
+                flash('city not found', 'is-danger')
+        else:
+            flash("This city already exist in database", "is-danger")
+    return redirect(url_for('apiWeather'))
+
+
+def get_weather_data(city): 
+    """ Cette fonction permet de faire une requete vers l' api openWeather
+
+        Arguments:
+            city {[string]} -- le nom de la ville
+
+        Returns:
+            [json] -- dataset
+    """
+    
+    yourapikey = '47c070163f772ba63244f399e7be83f2'
+    units = 'metric'   #imperial cityname
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={yourapikey}&units={units}'
+    r = requests.get(url)
+    return r.json()
     

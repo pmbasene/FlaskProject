@@ -1,0 +1,94 @@
+{% extends 'layouts/default.html' %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">This is my Contact page</h1>
+        <h2 class="subtitle">
+            <strong>Coding ...</strong>
+        </h2>
+    </div>
+</section>
+
+<div class="columns">
+  <div class="column is-4 is-offset-8">   
+    <form method="post">
+        <div class="field is-grouped">
+            <p class="control is-expanded">
+                <input class="input" name="city" type="text" placeholder="Find a city weather">
+            </p>
+            <p class="control">
+                <button class="button is-info">
+                    City
+                </button>
+            </p>
+        </div>
+    </form>
+
+    {% for data in collectData %}     
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                <img src="http://openweathermap.org/img/wn/{{ data.icon }}@2x.png">
+            </p>
+            <br>
+            <strong> {{ data.temp }} °C</strong>   
+           
+        </figure>
+        <div class="media-content"> 
+            <div class="content">
+                <p>
+                    <h2 class="subtitle"> 🥀 {{ data.city }}</h2>
+                    <hr>
+                    <strong> Pressure : {{ data.pressure }} hPa</strong>
+                    <br>
+                    <strong> Humidity : {{ data.humidity }} %</strong>
+                    <br>
+                    <small> {{ data.description }}</small>
+                </p>
+            </div>
+            <!-- <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                    </a>
+                </div>
+            </nav> -->
+        </div>
+        <div class="media-right">
+            <button class="delete"></button>
+        </div>
+    </article>
+    
+    {% endfor %}
+
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+

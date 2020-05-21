@@ -9,7 +9,7 @@ from application.models import User
 
 
 
-class RegistrationForm(FlaskForm):
+class RegistrationForm(FlaskForm): 
     username = StringField('Username',
                             validators = [DataRequired(), Length(min=2, max=20)])
     email =  EmailField('Email',

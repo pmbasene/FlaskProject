@@ -1,13 +1,5 @@
-<!-- <nav>
-    <ul>
-        <li><a href="/">       home  </a></li>
-        <li><a href="/store">  store  </a></li>
-        <li><a href="/about">  about  </a></li>
-    </ul>
-</nav> -->
-
-
-<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+<!-- is-fixed-top -->
+<nav class="navbar" role="navigation" aria-label="main navigation">  
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
       <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
@@ -33,7 +25,7 @@
         <div class="navbar-dropdown">
           <a class="navbar-item"> Forum </a>
           <a class="navbar-item"> AWS Management</a>
-          <a class="navbar-item"> Weather API</a>
+          <a class="navbar-item" href="{{ url_for('apiWeather') }}"> Weather API</a> 
           <a class="navbar-item" href="{{ url_for('garage') }}"> Garage</a>
           <a class="navbar-item" href="{{ url_for('summernote') }}"> wysiwyg</a>
           <hr class="navbar-divider">
@@ -77,3 +69,4 @@
 
   </div>
 </nav>
+
