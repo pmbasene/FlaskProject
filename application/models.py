@@ -46,7 +46,7 @@ class Editor(db.Model):
 class Weather(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    # date_posted = db.Column(db.DateTime, nullable=True, default = datetime.utcnow ) # afin quelle soit facultative
+    date_posted = db.Column(db.DateTime, nullable=True, default = datetime.utcnow ) # afin quelle soit facultative
     # image_file = db.Column(db.String(20), nullable=True, default ="default.jpg")
     
     

@@ -11,7 +11,7 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title">This is my Contact page</h1>
+        <h1 class="title">Open Weather Map </h1>
         <h2 class="subtitle">
             <strong>Coding ...</strong>
         </h2>
@@ -19,7 +19,74 @@
 </section>
 
 <div class="columns">
-  <div class="column is-4 is-offset-8">   
+   <div class="column"> 
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th><abbr title="Position">Id</abbr></th>
+                <th>City</th>
+                <th><abbr title="Played">Temp °C</abbr></th>
+                <th><abbr title="Won">tMin</abbr></th>
+                <th><abbr title="Drawn">tMax</abbr></th>
+                <th><abbr title="Lost">Pressure hPa</abbr></th>
+                <th><abbr title="Goals for">Humidity %</abbr></th>
+                <th><abbr title="Goals against">Wind </abbr></th>
+                <th><abbr title="Goal difference">Icon</abbr></th>
+                <th><abbr title="Points">Description</abbr></th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {% for data in collectData %}
+                       
+                <tr>
+                    <th>{{ loop.index }}</th>
+                    <td><a href="#">{{ data.city }}</td>
+                    <td>{{ data.temp }}</td>
+                    <td>{{ data.temp_min }}</td>
+                    <td>{{ data.temp_max }}</td>
+                    <td>{{ data.pressure }}</td>
+                    <td>{{ data.humidity }}</td>
+                    <td>{{ data.wind_speed }}</td>
+                    <td>
+                        <p class="image is-24x24">
+                            <img src="http://openweathermap.org/img/wn/{{ data.icon }}@2x.png">
+                        </p>
+                
+                    </td>
+                    <td>{{ data.description }}</td>
+                </tr>
+
+            {% endfor %}
+                    
+                    <!-- <tr class="is-selected">
+                <th>4</th>
+                <td><a href="https://en.wikipedia.org/wiki/Manchester_City_F.C." title="Manchester City F.C.">Manchester
+                        City</a></td>
+                <td>38</td>
+                <td>19</td>
+                <td>9</td>
+                <td>10</td>
+                <td>71</td>
+                <td>41</td>
+                <td>+30</td>
+                <td>66</td>
+                <td>Qualification for the <a
+                        href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Play-off_round"
+                        title="2016–17 UEFA Champions League">Champions League play-off round</a></td>
+            </tr> -->
+        </tbody>
+
+
+    </table>
+   </div>
+
+
+
+
+
+  <div class="column">   
     <form method="post">
         <div class="field is-grouped">
             <p class="control is-expanded">
@@ -37,8 +104,8 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                <img src="http://openweathermap.org/img/wn/{{ data.icon }}@2x.png">
-            </p>
+                        <img src="http://openweathermap.org/img/wn/{{ data.icon }}@2x.png">
+                    </p>
             <br>
             <strong> {{ data.temp }} °C</strong>   
            
@@ -48,11 +115,10 @@
                 <p>
                     <h2 class="subtitle"> 🥀 {{ data.city }}</h2>
                     <hr>
-                    <strong> Pressure : {{ data.pressure }} hPa</strong>
+     <span>         <strong> Pressure : {{ data.pressure }} hPa</strong> </span>
+    <span>          <strong> Humidity : {{ data.humidity }} %</strong> </span>
                     <br>
-                    <strong> Humidity : {{ data.humidity }} %</strong>
-                    <br>
-                    <small> {{ data.description }}</small>
+    <span>          <small> {{ data.description }}</small> </span>
                 </p>
             </div>
             <!-- <nav class="level is-mobile">
@@ -70,7 +136,9 @@
             </nav> -->
         </div>
         <div class="media-right">
-            <button class="delete"></button>
+            <a href="{{ url_for('apiWeather_delete_post', name=data.city ) }}">
+                <button class="delete"></button>
+            </a>
         </div>
     </article>
     

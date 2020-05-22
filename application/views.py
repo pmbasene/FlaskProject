@@ -264,6 +264,8 @@ def apiWeather():
         data = { 
             'city'        : city.name ,
             'temp'        : resp['main']['temp'],
+            'temp_min'        : resp['main']['temp_min'],
+            'temp_max'        : resp['main']['temp_max'],
             'pressure'    : resp['main']['pressure'],
             'humidity'    : resp['main']['humidity'],
             'description' : resp['weather'] [0]['description'] ,
@@ -302,10 +304,18 @@ def get_weather_data(city):
         Returns:
             [json] -- dataset
     """
-    
     yourapikey = '47c070163f772ba63244f399e7be83f2'
     units = 'metric'   #imperial cityname
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={yourapikey}&units={units}'
     r = requests.get(url)
     return r.json()
+    
+
+@app.route('/apiWeather/delete/<name>')
+def apiWeather_delete_post(name):
+    city = Weather.query.filter_by(name=name).first()
+    db.session.delete(city)
+    db.session.commit()
+    flash(f"{name} supprimée ", "is-success") # ou city.namr
+    return redirect(url_for('apiWeather'))
     
