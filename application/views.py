@@ -246,10 +246,6 @@ def display():
 #     return render_template('docEssai/display.html', posts=posts)
 
 
-
-
-
-
 @app.route('/apiWeather', methods=['GET'])
 def apiWeather():
     #    # todo

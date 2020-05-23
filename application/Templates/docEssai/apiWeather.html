@@ -38,8 +38,7 @@
         </thead>
       
         <tbody>
-            {% for data in collectData %}
-                       
+            {% for data in collectData %}             
                 <tr>
                     <th>{{ loop.index }}</th>
                     <td><a href="#">{{ data.city }}</td>
@@ -57,7 +56,6 @@
                     </td>
                     <td>{{ data.description }}</td>
                 </tr>
-
             {% endfor %}
                     
                     <!-- <tr class="is-selected">
