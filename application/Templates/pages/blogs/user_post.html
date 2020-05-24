@@ -1,0 +1,141 @@
+{% extends 'layouts/default.html' %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<section class="hero is-light">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title"> Blog page.</h1>
+            <h2 class="subtitle">
+                <!-- la methode internationalisation i18n {{ trans}} ne marche pas parce que
+                la variable {{posts}} nest pas une list mais un iterable de type paginate
+            car etant generé par paginate -->
+                <small>
+                    {% if posts.total == 1 %}
+                    <span class="tag is-medium is-link"> {{ posts.total }} </span> Article posté par
+                    {{ user.username }}</small>
+                {% else %}
+                <span class="tag is-medium is-link"> {{ posts.total }} </span> Articles postés par
+                {{ user.username }}</small>
+                {% endif %}
+            </h2>
+        </div>
+    </div>
+</section>
+<div class="columns">
+
+    <div class="column">
+        First column
+    </div>
+
+    <div class="column is-6 col_center">
+        {% for post in posts.items %}
+        <!-- <section class="section blog"> -->
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-48x48 is-rounded">
+                    <img src="{{ url_for('static', filename='src/img/profile_pics/'+ post.author.image_file) }}">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{ post.title }} </strong> <small>{{ post.author.username }}</small>
+                        <small>{{post.date_posted| formatted_date}}</small>
+                        <br>
+                        {{ post.content |truncate (200) }} <a href="{{ url_for('blog_show', id=post.id) }}"> Lire la
+                            suite</a>
+                    </p>
+                </div>
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <a class="level-item">
+                            <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </article>
+
+        {% endfor %}
+
+        <div>
+            <nav class="pagination is-small" role="navigation" aria-label="pagination">
+                <a class="pagination-previous">Previous</a>
+                <a class="pagination-next">Next page</a>
+                <ul class="pagination-list">
+                    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                    {% if posts.page == page_num %}
+                    <li><a class="pagination-link" href="{{ url_for('user_post', username=user.username, page=page_num,) }}"> {{ page_num }} </a>
+                        {% else %}
+                    <li><a class="pagination-link is-current" href="{{ url_for('user_post',  username=user.username, page=page_num,) }}">
+                            {{ page_num }} </a>
+                        {% endif %}
+                        {% else %}
+                    <li><span class="pagination-ellipsis">&hellip;</span></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- information lateral -->
+    <div class="column">
+        <div class="list is-hoverable">
+            <a class="list-item">
+                Forum
+            </a>
+            <a class="list-item">
+                Les 5 derniers posts
+            </a>
+            <a class="list-item is-active">
+                Announcements
+            </a>
+            <a class="list-item">
+                Toutes Les videos
+            </a>
+            <a class="list-item">
+                Evenements
+            </a>
+            <a class="list-item">
+                La comminunauté
+            </a>
+            <a class="list-item">
+                Promotion 2107
+            </a>
+            <a class="list-item">
+                Promotion 2018
+            </a>
+            <a class="list-item">
+                Promotion 2107
+            </a>
+            <a class="list-item">
+                Evenements
+            </a>
+            <a class="list-item">
+                Policy
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- pagination -->
+
+
+
+
+{% endblock %}

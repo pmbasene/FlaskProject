@@ -1,8 +1,11 @@
 {% extends 'layouts/default.html' %}
 
+<!-- css -->
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blog.css') }}">
 {% endblock %}
+
+<!-- body -->
 
 {% block body %}
 
@@ -34,8 +37,8 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <strong>{{ post.title }} </strong> <small>{{ post.author.username }}</small>
-            <small>{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            <strong>{{ post.title }} </strong> <small> <a href="{{ url_for('user_post', username=post.author.username) }}"> {{ post.author.username }} </a> </small>
+            <small>{{ post.date_posted| formatted_date }}</small>
             <br>
             {{ post.content |truncate (200) }} <a href="{{ url_for('blog_show', id=post.id) }}"> Lire la suite</a>
           </p>

@@ -34,8 +34,8 @@
 <div> <a href="{{ url_for('blog') }}">↪️</a> Retour aux publications</div>
 <div class="columns">
   <div class="column is-3">
-    <a href="#"> Auteur: {{ posts.author.username }} </a> <br>
-    <small> Date de publication: {{posts.date_posted.strftime('%Y-%m-%d')}}</small>
+    <a href="{{ url_for('user_post', username=posts.author.username) }}" > Auteur:   {{ posts.author.username }} </a> <br>
+    <small> Date de publication: {{posts.date_posted| formatted_date}}</small>
   </div>
   <div class="column is-8">
     <article class="media">

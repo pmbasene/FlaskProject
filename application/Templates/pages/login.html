@@ -10,63 +10,62 @@
 <h1 class="title"> Connectez vous à votre compte </h1>
 
 <div class="columns">
-    <div class="column is-offset-4 is-4">
-      <form method="POST" action="#">
-          {{ form.hidden_tag() }}
-            <div class="field ">
-              <div class="control">               
-                {{ form.email.label(class="label") }}
-                {% if form.email.errors %}
-                      {{ form.email(class="input is-danger") }}
-                          <div class="help is-danger">
-                              {% for error in form.email.errors %}
-                                      {{ error }}
-                              {% endfor %}
-                          </div>           
-                  {% else %}
-                      {{ form.email(class="input is-success ") }}
-                  {% endif %}
-              </div>
-            </div>
-            <div class="field">
-              <p class="control">
-                {{ form.password.label(class="label") }}
-                {% if form.password.errors %}
-                      {{ form.password(class="input is-danger") }}
-                          <div class="help is-danger">
-                              {% for error in form.password.errors %}
-                                      {{ error }}
-                              {% endfor %}
-                          </div>     
-                  {% else %}
-                      {{ form.password(class="input is-success ") }}
-                  {% endif %}
-              </p>
-            </div>
+  <div class="column is-offset-4 is-4">
+    <form method="POST" action="#">
+      {{ form.hidden_tag() }}
+      <div class="field ">
+        <div class="control">
+          {{ form.email.label(class="label") }}
+          {% if form.email.errors %}
+          {{ form.email(class="input is-danger") }}
+          <div class="help is-danger">
+            {% for error in form.email.errors %}
+            {{ error }}
+            {% endfor %}
+          </div>
+          {% else %}
+          {{ form.email(class="input is-success ") }}
+          {% endif %}
+        </div>
+      </div>
+      <div class="field">
+        <p class="control">
+          {{ form.password.label(class="label") }}
+          {% if form.password.errors %}
+          {{ form.password(class="input is-danger") }}
+        <div class="help is-danger">
+          {% for error in form.password.errors %}
+          {{ error }}
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.password(class="input is-success ") }}
+        {% endif %}
+        </p>
+      </div>
 
-            <div>
-                <label class="checkbox">
-                    {{ form.remember.label(class="checkbox") }}
-                    {{ form.remember(class="checkbox") }}
-                  </label>   
-            </div>
-            
+      <div>
+        <label class="checkbox">
+          {{ form.remember.label(class="checkbox") }}
+          {{ form.remember(class="checkbox") }}
+        </label>
+      </div>
 
-            <div class="field">
-              <div class="control">
-                <!-- <button class="button is-link">Sign up</button> -->
-                {{ form.submit(class='button  is-block is-info is-large is-fullwidth') }}
-              </div>
-            </div>
-      </form>
-      <p class="has-text-grey">
-        <a href="{{ url_for('register') }}">Sign Up now</a> &nbsp;·&nbsp;
-        <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-        <a href="../">Need Help?</a>
-      </p>
-    </div>
 
+      <div class="field">
+        <div class="control">
+          <!-- <button class="button is-link">Sign up</button> -->
+          {{ form.submit(class='button  is-block is-info is-large is-fullwidth') }}
+        </div>
+      </div>
+    </form>
+    <p class="has-text-grey">
+      <a href="{{ url_for('register') }}">Sign Up now</a> &nbsp;·&nbsp;
+      <a href="{{ url_for('reset_request') }}">Forgot Password</a> &nbsp;·&nbsp;
+    </p>
   </div>
+
+</div>
   
- 
+
 {% endblock %}

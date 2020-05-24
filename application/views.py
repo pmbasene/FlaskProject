@@ -4,10 +4,12 @@ import secrets
 from PIL import Image
 # from flask_sqlalchemy import sqlalchemy # pour utliser la fonction desc de sqlalchemy . Remarque # from flask_sqlalchemy.sqlalchemy import desc , ne marche pas , why??
 from flask import render_template, url_for, flash, redirect, request, abort
-from application import app, db , bcrypt
-from application.forms import RegistrationForm , LoginForm, UpdateAccountForm, PostFrom
+from application import app, db , bcrypt, mail
+from application.forms import (RegistrationForm , LoginForm, UpdateAccountForm, 
+                               PostFrom, RequestResetForm, ResetPasswordForm)
 from application.models import User, Post, Editor, Weather
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 posts = [
             {
@@ -41,10 +43,9 @@ posts = [
         ]
 
 # filter personnalité tres utile
-# @app.template_fliter('date_normale')
-# def date_normale(dt):
-#     return dt.strftime('%d %b %Y')
-
+@app.template_filter('formatted_date')
+def formatted_date(dt):
+    return dt.strftime('%d %b %Y')
 
 
 
@@ -68,6 +69,17 @@ def blog():
     # post = Post.query.order_by(sqlalchemy.desc(Post.date_posted)).all()    # pour trier du plus recent ...
     return render_template('pages/blogs/post_index.html',  posts=post, title='All Posts')
 
+@app.route('/user_post/<string:username>')
+def user_post(username):
+    page = request.args.get('page', 1, type=int)
+    
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+                        .order_by(Post.date_posted.desc())\
+                        .paginate(page=page,  per_page=3)    
+    return render_template('pages/blogs/user_post.html',  posts=posts, user=user, title='All User Posts')
+    
+
 @app.route('/blog/post/<int:id>')
 def blog_show(id):
     # post = posts[int(id) - 1] 
@@ -78,6 +90,11 @@ def blog_show(id):
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('errors/404.html'), 404
+
+@app.errorhandler(403)
+def page_not_found(e):
+    # note that we set the 403 status explicitly
+    return render_template('errors/403.html'), 403
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -148,7 +165,6 @@ def account():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
-
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
@@ -159,6 +175,8 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='src/img/profile_pics/' + current_user.image_file)
     return render_template('pages/account.html', title='account', image_file=image_file, form=form)
+
+
 
 @app.route('/post/new', methods=['GET','POST'])
 @login_required
@@ -172,6 +190,7 @@ def new_post():
         return redirect(url_for('blog'))
     return render_template('pages/blogs/create_post.html', title='New Post', 
     form=form, legend = "Creer un nouveau Post")
+
 
 @app.route('/blog/post/<int:id>/update',methods=['GET','POST'])
 @login_required
@@ -192,6 +211,7 @@ def update_post(id):
     return render_template('pages/blogs/create_post.html', title='Update Post', 
            form= form, legend = "Mise à jour du Post" )
  
+ 
 @app.route('/blog/post/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_post(id):
@@ -200,16 +220,60 @@ def delete_post(id):
         abort(403)
     db.session.delete(post)
     db.session.commit()
-    flash(' Your Post has been deleted!', 'is-success')
+    flash('Your Post has been deleted!', 'is-success')
     return redirect(url_for('home'))
 
+def send_reset_email(user):
+    # _external = True enable to have absolute path url ranter than relative path
+    token = user.get_reset_token()
+    msg = Message('password Reset Resquest', \
+                        sender='basene89@gmail.com', \
+                        recipients=[user.email] )
+    
+    msg.body = f''' To reset your password , visit to following link:
+        {url_for('reset_token', token=token, _external= True)}.
+        if you did not make this request then simply ignore this email.
+        
+        '''
+    mail.send(msg)
 
+@app.route('/reset_password', methods=['GET','POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        user = User.query.filter_by(email=email).first()
+        send_reset_email(user)
+        flash(' Un mail vous a ete envoyé avec les instructions pour initialiser votre password', 'is-success')
+        return redirect(url_for('login'))
+    return render_template('pages/reset_request.html', form=form, title='Request Reset Password')
+    
+@app.route('/reset_password/<token>', methods=['GET','POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'is-danger')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if request.method =='POST' and form.validate_on_submit():   #and form.validate()  # envoyer un message flash de succes et retour a la page d'accueil
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf8')
+        user.password = password_hash
+        db.session.commit()
+        flash(f' Votre password a ete mise à jour, vous pouvez maintenant vous connectez!', 'is-success')
+        return redirect(url_for('login'))
+    
+    return render_template('pages/reset_token.html', form=form, title='Reset Password')
+    
+        
+    
 # my stuff
 @app.route('/testjs')
 def testjs():
     return render_template('testjs.html')
-
-
 
 # -----route for testing----- 
 

@@ -1,7 +1,18 @@
 {% extends 'layouts/default.html' %}
 
 {% block body %}
-<h1> This page does not exist !!!</h1>
-<p> Go back to <a href="/">homepage</a> </p>
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <h1 class="title">Error</h1>
+        <h2 class="subtitle">
+            Sorry, This page does not exist !!!   
+            <p> Go back to <a href="{{ url_for("home") }}">homepage</a> </p>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
 {% endblock %}
 
