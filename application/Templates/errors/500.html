@@ -1,16 +1,17 @@
 {% extends 'layouts/default.html' %}
 
 {% block body %}
-
 <section class="section">
     <div class="container">
         <div class="heading">
             <h1 class="title">Error</h1>
             <h2 class="subtitle">
-                Desolé vous avez pas acces a cette page. incrivez d'abord!!!
-                <p> Go back to <a href="{{ url_for('users.login') }}"> Login page</a> </p>
+                Notre serveur n'est accessible pour le moment !!!
+                <p> Go back to <a href="{{ url_for("main.home") }}">homepage</a> </p>
             </h2>
         </div>
     </div>
 </section>
+
+
 {% endblock %}

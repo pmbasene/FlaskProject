@@ -1,8 +1,8 @@
 from application import db
 from application.apiWeather.utils import get_weather_data
 from flask import render_template, url_for, flash, redirect, request, Blueprint
-
-
+from application.models import Weather
+from flask_login import login_user, current_user
 
 weathers = Blueprint('weathers', __name__)
 
@@ -13,24 +13,26 @@ def apiWeather():
     #    # todo
     # add city name in data database for query throught a search bar
     # create column side which contains all regions
-
+    
     collectData = []
+
+        
     cities = Weather.query.order_by(Weather.date_posted.desc()).all()
 
     for city in cities:
         resp = get_weather_data(city.name)
         data = {
-            'city': city.name,
-            'temp': resp['main']['temp'],
-            'temp_min': resp['main']['temp_min'],
-            'temp_max': resp['main']['temp_max'],
-            'pressure': resp['main']['pressure'],
-            'humidity': resp['main']['humidity'],
-            'description': resp['weather'][0]['description'],
-            'icon': resp['weather'][0]['icon'],
-            'wind_speed':  resp['wind']['speed'],
-            # 'wind_deg'    : resp['wind']['deg'],
-        }
+                'city': city.name,
+                'temp': resp['main']['temp'],
+                'temp_min': resp['main']['temp_min'],
+                'temp_max': resp['main']['temp_max'],
+                'pressure': resp['main']['pressure'],
+                'humidity': resp['main']['humidity'],
+                'description': resp['weather'][0]['description'],
+                'icon': resp['weather'][0]['icon'],
+                'wind_speed':  resp['wind']['speed'],
+                # 'wind_deg'    : resp['wind']['deg'],
+            }
         collectData.append(data)
     return render_template('docEssai/apiWeather.html', collectData=collectData)
 
@@ -47,8 +49,8 @@ def apiWeather_post():
                 weather = Weather(name=city)
                 db.session.add(weather)
                 db.session.commit()
-                flash(
-                    f'Good! Les conditions climatiques pour la ville de {city} sont bien disponibles', 'is-success')
+            
+                flash( f'Good! Les conditions climatiques pour la ville de {city} sont bien disponibles', 'is-success')
             else:
                 flash('city not found', 'is-danger')
         else:

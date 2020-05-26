@@ -1,3 +1,4 @@
+import requests
 def get_weather_data(city):
     """ Cette fonction permet de faire une requete vers l' api openWeather
 

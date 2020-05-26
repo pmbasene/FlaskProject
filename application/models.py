@@ -1,6 +1,7 @@
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app , redirect
 from datetime import datetime
-from application import db, login_manager, admin_manager , app
+from application import db, login_manager, admin_manager 
 from flask_login import UserMixin, current_user
 from flask_admin.contrib.sqla import ModelView
 
@@ -23,12 +24,12 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}',  '{self.image_file}' )"
 
     def get_reset_token(self, expire_sec= 1800):
-        s= Serializer(app.config['SECRET_KEY'], expire_sec)
+        s= Serializer(current_app.config['SECRET_KEY'], expire_sec)
         return s.dumps({'user_id':self.id}).decode('utf-8')
     
     @staticmethod
     def verify_reset_token(token):
-        s= Serializer(app.config['SECRET_KEY'])
+        s= Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']
         except:
@@ -58,7 +59,6 @@ class Editor(db.Model):
     title = db.Column(db.String(20), nullable=True)
 
 
-
 class Weather(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -67,8 +67,8 @@ class Weather(db.Model):
     
     
 
+#https: // flask-user.readthedocs.io/en/latest/data_models.html#roleanduserroledatamodels
 # Admin Model
-
 class ControllerAdmin(ModelView):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
@@ -77,7 +77,8 @@ class ControllerAdmin(ModelView):
         return current_user.is_authenticated
 
     def is_not_accessible(self):
-        return "You are not authorized to access admin dashboard"
+        # return "You are not authorized to access admin dashboard"
+        return redirect(url_for('users.login', next=request.url))
 
 admin_manager.add_view(ControllerAdmin(User, db.session))
 admin_manager.add_view(ControllerAdmin(Post, db.session))

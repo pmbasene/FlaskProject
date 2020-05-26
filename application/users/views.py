@@ -5,7 +5,7 @@ from application.users.forms import (RegistrationForm, LoginForm, UpdateAccountF
                                      RequestResetForm, ResetPasswordForm)
 from application.users.utils import save_picture, send_reset_email
 from application.models import User, Post
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, abort
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -41,9 +41,11 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
+            flash('Good! You have been logged in.', 'is-success')
             next_page = request.args.get('next')
-            flash('Good! You have been logged in.', 'is-succes')
-            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+            # if not is_safe_url(next_page):
+                # return abort(400)
+            return redirect(next_page or url_for('main.home'))
         else:
             flash('Login Unsuccessul. Try again! Your credentials is false', 'is-danger')
     return render_template('pages/login.html', title='login', form=form)

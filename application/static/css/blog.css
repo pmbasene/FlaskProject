@@ -12,15 +12,15 @@
 
 } */
 
-.column{
+/* .column.col-left .column.col-right{
     text-align: justify;
     padding: 10px 20px;
     border:1px solid #dddddd;
     border-radius: 3px ;
     margin-bottom:20px ;
  }
- 
-.column.col_center{
+  */
+.column.col-center{
     background-color: #eeeeef;
     font-size: small;
 
