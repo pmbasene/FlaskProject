@@ -1,4 +1,9 @@
-
+from application import app,  mail
+from flask_mail import Message
+import os
+from PIL import Image
+import secrets
+from flask import url_for
 
 
 def save_picture(form_picture):
@@ -6,13 +11,10 @@ def save_picture(form_picture):
     _ ,f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/src/img/profile_pics', picture_fn)
-
     output_size  = (128, 128)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
-
-
     return picture_fn
 
 

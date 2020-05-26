@@ -31,16 +31,26 @@ app.config['MAIL_PASSWORD'] = 'babaguedj12&'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'is-info'
-
 
 admin_manager = Admin(app, name='BabAdmin')
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
-
 mail = Mail(app)
 
-from application import views  # to avoid circular import 
+# register_blueprint
+from application.users.views import users 
+from application.posts.views import posts 
+from application.main.views import main 
+from application.summernote.views import summers
+from application.apiWeather.views import weathers 
+
+
+app.register_blueprint(users)
+app.register_blueprint(posts)
+app.register_blueprint(main)
+app.register_blueprint(weathers)
+app.register_blueprint(summers)

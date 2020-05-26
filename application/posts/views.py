@@ -1,19 +1,13 @@
 
 # from flask_sqlalchemy import sqlalchemy # pour utliser la fonction desc de sqlalchemy . Remarque # from flask_sqlalchemy.sqlalchemy import desc , ne marche pas , why??
-from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
+from flask import (render_template, url_for, flash, redirect,
+                    request, abort, Blueprint)
+from flask_login import  current_user, login_required
 from application import db
-from application.forms import PostFrom
+from application.posts.forms import PostForm
 from application.models import  Post
-from flask_login import  current_user, logout_user, login_required
 
 
-
-
-
-
-
-
-from flask import Blueprint
 
 posts = Blueprint('posts', __name__)
 
@@ -37,14 +31,14 @@ def blog_show(id):
 @posts.route('/post/new', methods=['GET', 'POST'])
 @login_required
 def new_post():
-    form = PostFrom()
+    form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data,
                     content=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created', 'is-success')
-        return redirect(url_for('blog'))
+        return redirect(url_for('posts.blog'))
     return render_template('pages/blogs/create_post.html', title='New Post',
                            form=form, legend="Creer un nouveau Post")
 
@@ -55,13 +49,13 @@ def update_post(id):
     post = Post.query.get_or_404(id)
     if post.author != current_user:
         abort(403)
-    form = PostFrom()
+    form = PostForm()
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
         flash(' Your Post has been update!', 'is-success')
-        return redirect(url_for('blog_show', id=post.id))
+        return redirect(url_for('posts.blog_show', id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
@@ -78,6 +72,6 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     flash('Your Post has been deleted!', 'is-success')
-    return redirect(url_for('home'))
+    return redirect(url_for('main.home'))
 
 

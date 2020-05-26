@@ -1,5 +1,8 @@
+from application import db
+from application.apiWeather.utils import get_weather_data
+from flask import render_template, url_for, flash, redirect, request, Blueprint
 
-from flask import Blueprint
+
 
 weathers = Blueprint('weathers', __name__)
 
@@ -50,7 +53,7 @@ def apiWeather_post():
                 flash('city not found', 'is-danger')
         else:
             flash("This city already exist in database", "is-danger")
-    return redirect(url_for('apiWeather'))
+    return redirect(url_for('weathers.apiWeather'))
 
 
 
@@ -61,4 +64,4 @@ def apiWeather_delete_post(name):
     db.session.delete(city)
     db.session.commit()
     flash(f"{name} supprimée ", "is-success")  # ou city.namr
-    return redirect(url_for('apiWeather'))
+    return redirect(url_for('weathers.apiWeather'))

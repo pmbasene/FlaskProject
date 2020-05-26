@@ -1,9 +1,11 @@
 
+from application import db
+# from application.apiWeather.utils import get_weather_data
+from flask import render_template, url_for, flash, redirect, request, Blueprint
 
-from flask import Blueprint
+
 
 summers = Blueprint('summers', __name__)
-
 
 
 # for integrating text editor
@@ -15,7 +17,7 @@ def summernote():
         db.session.add(editor)
         db.session.commit()
         # return 'Posted Data'
-        return redirect(url_for('display'))
+        return redirect(url_for('summers.display'))
     return render_template('docEssai/summernote.html')
 
 

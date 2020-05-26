@@ -9,6 +9,10 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///site.db" 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASK_ADMIN_SWATCH = 'cerulean'
+    MAIL_SERVER = 'stmp.googlemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -16,3 +20,8 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///site.db" 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     FLASK_ADMIN_SWATCH = 'cerulean'
+    MAIL_SERVER = 'stmp.googlemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = 'Inconnu'
+    MAIL_PASSWORD = 'Babaguedj12&'

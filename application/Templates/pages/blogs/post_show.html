@@ -14,12 +14,12 @@
       <div class="field is-grouped">
         <p class="control">
           <!-- <button class="button "> -->
-          <a class="button is-link" href="{{ url_for('update_post', id=posts.id) }}"> Update Post </a>
+          <a class="button is-link" href="{{ url_for('posts.update_post', id=posts.id) }}"> Update Post </a>
           <!-- </button> -->
         </p>
         <p class="control">
           <!-- <button class="button is-danger"> -->
-        <form action="{{ url_for('delete_post', id=posts.id) }}" , method="POST">
+        <form action="{{ url_for('posts.delete_post', id=posts.id) }}" , method="POST">
           <input class="button is-danger" type="submit" value="Delete">
         </form>
         <!-- </button> -->
@@ -31,10 +31,10 @@
   </div>
 </section>
 
-<div> <a href="{{ url_for('blog') }}">↪️</a> Retour aux publications</div>
+<div> <a href="{{ url_for('posts.blog') }}">↪️</a> Retour aux publications</div>
 <div class="columns">
   <div class="column is-3">
-    <a href="{{ url_for('user_post', username=posts.author.username) }}" > Auteur:   {{ posts.author.username }} </a> <br>
+    <a href="{{ url_for('users.user_post', username=posts.author.username) }}" > Auteur:   {{ posts.author.username }} </a> <br>
     <small> Date de publication: {{posts.date_posted| formatted_date}}</small>
   </div>
   <div class="column is-8">
