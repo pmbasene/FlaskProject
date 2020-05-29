@@ -1,3 +1,5 @@
+import os
+
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -5,15 +7,16 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     USER_RELOADER=True
-    SECRET_KEY = 'a0cc3a3a97d7591686b822198050e946'
-    SQLALCHEMY_DATABASE_URI = "sqlite:///site.db" 
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASK_ADMIN_SWATCH = 'cerulean'
     MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 587
+    MAIL_PORT = 587     # 465
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'babaguedj@gmail.com'
-    MAIL_PASSWORD = 'babaguedj12&'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+
 
     
 
