@@ -2,11 +2,11 @@
 > (editing) : Ce document est en cours d' etition
 
 
-L'objectif de projet est de me familiser avec les differentes fonctionnalités qu'offe le micro framework flask dans une perspective de les intergrer eventuellement dans d'autres projets.
+L'objectif de projet est de me familiser avec les differentes fonctionnalités qu'offrent le micro framework flask dans une perspective de les intergrer eventuellement dans d'autres projets.
 
 ## Les pages
 
-Les differentes pages que constitue le site sont lister ci-dessous:
+Les differentes pages du site  sont listées ci-dessous:
 
 1. page d'acceuil 
 2. page blog
@@ -31,7 +31,7 @@ Les differentes pages que constitue le site sont lister ci-dessous:
 - heroku
 - aws avec beanstalk
 - server linux soit avec linode cloud ou une instance linux chez aws
-- lambdba
+- lambda
 
  ## DETAILS
 
